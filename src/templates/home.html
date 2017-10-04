@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ block.super }}Home{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="home" %}
+{% endblock %}
+
+{% block navbar-right %}
+  {% if not user.is_authenticated %}
+<a class="btn btn-default" href="{% url 'accounts:login' %}" role="button">Log in</a>
+<a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Sign up</a>
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
+{% block splash %}
+  <div class="jumbotron jumbotron-carousel corporate-jumbo">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-8">
+          <h1>{% include "_brandname.html" %}</h1>
+          <p>Engagement, Kameradschaft, Bodenständigkeit.</p>
+	  <a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Ich möchte auch dabei sein!</a>
+        </div>
+        <div class="col-md-4 col-sm-4">
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock splash %}
+
+{% block container %}
+<!-- Benefits of the Django application -->
+<a name="about"></a>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <h2>Training</h2>
+      <p>Unsere Trainings finden jeweils am Mittwoch und Freitag statt. Im Winter ...</p>
+      <p><a class="btn btn-primary" href="#" role="button">Mehr dazu &raquo;</a></p>
+    </div>
+    <div class="col-lg-4">
+      <h2>Wettkämpfe</h2>
+      <p>Wir möchten zu den besten in der Schweiz gehören, als Team und als Einzelathleten. Die wichtigsten Wettkämpfe bilden die Schweizer- und Kantonalmeisterschaften.</p>
+      <p><a class="btn btn-primary" href="#" role="button">Mehr dazu&raquo;</a></p>
+    </div>
+    <div class="col-lg-4">
+      <h2>Philosophie</h2>
+      <p>Engagement, Kameradschaft, Bodenständigkeit ist unser Motto.</p>
+      <p><a class="btn btn-primary" href="#" role="button">Mehr dazu &raquo;</a></p>
+    </div>
+  </div>
+</div>
+
+{% endblock container %}
+
+{% block scripts %}
+<script src="{% static 'site/js/site.js' %}"></script>
+{% endblock scripts %}
+
