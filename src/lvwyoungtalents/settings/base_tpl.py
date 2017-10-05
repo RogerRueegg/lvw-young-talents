@@ -98,9 +98,14 @@ WSGI_APPLICATION = 'lvwyoungtalents.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    # Raises ImproperlyConfigured exception if DATABASE_URL not in
-    # os.environ
-    'default': env.db(),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'lvwyoungtalents',
+        'USER': 'postgres',
+        'PASSWORD': 'xxxx',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
 # Internationalization
@@ -122,6 +127,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 ALLOWED_HOSTS = []
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'lvwyoungtalents@gmail.com'
+EMAIL_HOST_PASSWORD = 'bastenso'
+EMAIL_PORT = 587
+DEFAULT_EMAIL_FROM = EMAIL_HOST_USER
 
 # Crispy Form Theme - Bootstrap 3
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
