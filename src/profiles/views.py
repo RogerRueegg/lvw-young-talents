@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import forms
 from . import models
+import datetime
 
 
 class ShowProfile(LoginRequiredMixin, generic.TemplateView):
@@ -44,8 +45,13 @@ class EditProfile(LoginRequiredMixin, generic.TemplateView):
                                          request.FILES,
                                          instance=user.profile)
         if not (user_form.is_valid() and profile_form.is_valid()):
-            messages.error(request, "There was a problem with the form. "
-                           "Please check the details.")
+            message = ""
+            if profile_form.errors:
+                if 'phone_number' in profile_form.errors.keys():
+                    message += "Bitte gibt Deine Natelnummer wie folgt ein: +41791234567. "
+                if 'bdate' in profile_form.errors.keys():
+                    message += "Bitte gibt das Geburtsdatum wie folgt ein: 2002-01-15 für 15. Januar 2002"
+            messages.error(request, message)
             user_form = forms.UserForm(instance=user)
             profile_form = forms.ProfileForm(instance=user.profile)
             return super(EditProfile, self).get(request,

@@ -4,14 +4,15 @@
 
 {% block title %}{{ block.super }}Sign Up{% endblock %}
 
-{% block form_heading %}Signing Up is Free{% endblock %}
+{% block form_heading %}Ich möchte der männlichen U16 Gruppe der LV Winterthur als Athlet oder als Eltern beitreten. {% endblock %}
 
 {% block form %}
   {% crispy form %}
 
   <div class="form-message">
     <p>
-      Already signed up? <a href="{% url 'accounts:login' %}">Log in</a>.
+      Die männliche U16 umfasst momentan die Jahrgänge 2003 und 2004.
+      Bist Du bereits im Team? <a href="{% url 'accounts:login' %}">Trete ein</a>.
     </p>
   </div>
 {% endblock form %}

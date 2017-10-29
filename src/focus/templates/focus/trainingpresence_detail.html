@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'focus_trainingpresence_list' %}">Trainingpresence Listing</a></p>
+<table class="table">
+<tr><td>slug</td><td>{{ object.slug }}</td></tr>
+<tr><td>created</td><td>{{ object.created }}</td></tr>
+<tr><td>last_updated</td><td>{{ object.last_updated }}</td></tr>
+<tr><td>yesorno</td><td>{{ object.yesorno }}</td></tr>
+<tr><td>excused</td><td>{{ object.excused }}</td></tr>
+<tr><td>feedback_to_coach</td><td>{{ object.feedback_to_coach }}</td></tr>
+<tr><td>feedback_to_athlete</td><td>{{ object.feedback_to_athlete }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Trainingpresence</a>
+
+{% endblock %}

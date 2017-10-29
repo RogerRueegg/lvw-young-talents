@@ -5,15 +5,16 @@
 
 {% block title %}{{ block.super }}Profile{% endblock %}
 
+{% block navbar-left %}
+  {% include "_navbar.html" %}
+{% endblock %}
+
 {% block container %}
 
 <div class="container profile-head">
   <div class="row">
-    <div class="col-sm-10">
-      <h1>{{ show_user.get_full_name }}</h1>
-      {% if editable %}
-      <a href="{% url 'profiles:edit_self' %}" class="btn btn-info">Edit Profile</a>
-      {% endif %}
+    <div class="col-sm-10 text-center">
+      <h1 style="color:white">{{ show_user.get_full_name }}</h1>
     </div>
     <div class="col-sm-2"><img title="profile picture" class="img-circle img-responsive" src="{% thumbnail show_user.profile.picture|default:'default_profile.png' 140x140 crop %}">
     </div>
@@ -34,13 +35,13 @@
 	    <span class="sr-only">Not Verified</span>
 	  {% endif %}
 	</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{ show_user.date_joined }}</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{ show_user.date_joined }}</li>
         <li class="list-group-item text-right"><span class="pull-left"><strong>Last seen</strong></span> {{ show_user.last_login }}</li>
       </ul>
     </div>
     <div class="col-sm-8">
       <div class="panel panel-default">
-        <div class="panel-heading">{{ show_user.get_full_name }}'s Profile
+        <div class="panel-heading">{{ show_user.get_full_name }}'s Profil
 	  {% if show_user.profile.slug %}
 	    <a href="{% url 'profiles:show' show_user.profile.slug %}">
 	    	<span class="glyphicon glyphicon-link" aria-hidden="true" title="Profile permalink"></span>
@@ -50,11 +51,21 @@
 	  {% endif %}
 	</div>
         <div class="panel-body">
-	  <strong>Bio</strong>: {{ show_user.profile.bio }}
+	  <p><strong>Über mich</strong>: {{ show_user.profile.bio }}</p>
+            <p><strong>Strasse</strong>: {{ show_user.profile.street }}</p>
+            <p><strong>Ort</strong>: {{ show_user.profile.city }}</p>
+            <p><strong>Natelnummer</strong>: {{ show_user.profile.phone_number }}</p>
+            <p><strong>Geburtsdatum</strong>: {{show_user.profile.bdate}}</p>
+            <p><strong>Rolle</strong>: {{ show_user.profile.user_type }}</p>
+
 	</div>
       </div>
     </div>
   </div>
+              {% if editable %}
+    <p>Bitte vervollständige Dein Profil hier:</p>
+      <a href="{% url 'profiles:edit_self' %}" class="btn btn-info">Profil abändern</a>
+      {% endif %}
 </div>
 
 {% endblock %}

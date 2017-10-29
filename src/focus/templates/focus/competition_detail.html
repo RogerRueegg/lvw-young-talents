@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ block.super }}About{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="about" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+{% block container %}
+
+<div id="sec1" class="text-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1>{% include "_brandname.html" %}</h1>
+        <p class="lead">Engagement, Kameradschaft, Bodenständigkeit.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<p><a class="btn btn-default" href="{% url 'focus:focus_competition_list' %}">Competition Listing</a></p>
+<table class="table">
+<tr><td>name</td><td>{{ object.name }}</td></tr>
+<tr><td>slug</td><td>{{ object.slug }}</td></tr>
+<tr><td>created</td><td>{{ object.created }}</td></tr>
+<tr><td>last_updated</td><td>{{ object.last_updated }}</td></tr>
+<tr><td>startime</td><td>{{ object.startime }}</td></tr>
+<tr><td>endtime</td><td>{{ object.endtime }}</td></tr>
+<tr><td>description</td><td>{{ object.description }}</td></tr>
+<tr><td>link</td><td>{{ object.link }}</td></tr>
+<tr><td>sign_in_date</td><td>{{ object.sign_in_date }}</td></tr>
+<tr><td>meeting_time</td><td>{{ object.meeting_time }}</td></tr>
+<tr><td>file</td><td>{{ object.file }}</td></tr>
+<tr><td>car_seats_required</td><td>{{ object.car_seats_required }}</td></tr>
+<tr><td>car_seats_available</td><td>{{ object.car_seats_available }}</td></tr>
+</table>
+<!--  <a class="btn btn-primary" href="{{object.get_update_url}}">Edit Competition</a> -->
+
+{% endblock %}

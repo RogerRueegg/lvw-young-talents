@@ -18,9 +18,9 @@ class LoginForm(AuthenticationForm):
         self.fields["username"].widget.input_type = "email"  # ugly hack
 
         self.helper.layout = Layout(
-            Field('username', placeholder="Enter Email", autofocus=""),
-            Field('password', placeholder="Enter Password"),
-            HTML('<a href="{}">Forgot Password?</a>'.format(
+            Field('username', placeholder="Deine Email", autofocus=""),
+            Field('password', placeholder="Dein Password"),
+            HTML('<a href="{}">Passwort vergessen?</a>'.format(
                 reverse("accounts:password-reset"))),
             Field('remember_me'),
             Submit('sign_in', 'Log in',

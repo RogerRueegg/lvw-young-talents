@@ -23,9 +23,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-sm-8">
-          <h1>{% include "_brandname.html" %}</h1>
-          <p>Engagement, Kameradschaft, Bodenständigkeit.</p>
-	  <a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Ich möchte auch dabei sein!</a>
+          <h1 style="color:whitesmoke; border: None; border-color: transparent;">{% include "_brandname.html" %}</h1>
+          <p style="color:whitesmoke; border: None; border-color: transparent;">Engagement, Kameradschaft, Bodenständigkeit.</p>
+	  <a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Ich möchte dabei sein!</a>
         </div>
         <div class="col-md-4 col-sm-4">
 
@@ -43,18 +43,22 @@
   <div class="row">
     <div class="col-lg-4">
       <h2>Training</h2>
-      <p>Unsere Trainings finden jeweils am Mittwoch und Freitag statt. Im Winter ...</p>
-      <p><a class="btn btn-primary" href="#" role="button">Mehr dazu &raquo;</a></p>
+      <p>Wir bereiten die U16 der LV Winterthur auf eine erfolgreiche Karriere als Leistungsportler vor. Bei Möglichkeit
+    besteht die Möglichkeit mit den Aktiven der LV Winterthur ein zusätzliches Fördertraining zu bestreiten.
+    Die nächsten Trainings finden wie folgt statt ...</p>
+      <p><a class="btn btn-primary" href="{% url 'focus:focus_training_list' %}"role="button">Mehr dazu &raquo;</a></p>
     </div>
     <div class="col-lg-4">
       <h2>Wettkämpfe</h2>
-      <p>Wir möchten zu den besten in der Schweiz gehören, als Team und als Einzelathleten. Die wichtigsten Wettkämpfe bilden die Schweizer- und Kantonalmeisterschaften.</p>
-      <p><a class="btn btn-primary" href="#" role="button">Mehr dazu&raquo;</a></p>
+      <p>Wir möchten zu den besten in der Schweiz gehören, als Team und als Einzelathleten. Die wichtigsten Wettkämpfe bilden die Schweizer- und Kantonalmeisterschaften.
+      Mit dem Trainingslager und Vorbereitungswettkämpfen sowie Teamevents bereiten wir uns optimal auf die Saisonhöhepunkte vor...</p>
+      <p><a class="btn btn-primary" href="{% url 'focus:focus_competition_list' %}" role="button">Mehr dazu&raquo;</a></p>
     </div>
     <div class="col-lg-4">
       <h2>Philosophie</h2>
-      <p>Engagement, Kameradschaft, Bodenständigkeit ist unser Motto.</p>
-      <p><a class="btn btn-primary" href="#" role="button">Mehr dazu &raquo;</a></p>
+      <p>Engagement, Kameradschaft, Bodenständigkeit ist unser Motto. Wir trainieren konzentriert, motivieren uns gegenseitig
+        und möchten grossen Spass an der Leichtathletik haben. </p>
+      <p><a class="btn btn-primary" href="{% url 'about' %}" role="button">Mehr dazu &raquo;</a></p>
     </div>
   </div>
 </div>

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load customtags %}
+
+{% block title %}{{ block.super }}Trainings{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="competition" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+{% block container %}
+
+<div id="sec1" class="text-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1 style="color:#ffffff">{% include "_brandname.html" %}</h1>
+        <h4 style="color:#ffffff">Engagement, Kameradschaft, Bodenständigkeit.</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {% if not user.is_authenticated %}
+<div class="container-fluid">
+<h1>Wettkämpfe & Events</h1>
+
+<div class="container-fluid">
+<table class="table table-hover table-bordered table-striped table-condensed">
+<tr>
+    <td>Was</td>
+    <td>Von</td>
+    <td>Bis</td>
+    <td>Wo</td>
+</tr>
+{% for object in object_list %}
+<tr>
+<!--    <td><a href="{{object.get_absolute_url}}">{{object.name}}</a></td> -->
+    <td>{{object.name}}</td>
+    <td>{{ object.starttime }}</td>
+    <td>{{ object.endtime }}</td>
+    <td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td>
+</tr>
+{% endfor %}
+</table>
+<!--        <a class="btn btn-primary" href="{% url 'focus:focus_training_create' %}">Neues Training</a> -->
+</div>
+
+  <h4>&nbsp;Wenn Du weitere Details erfahren möchtest, dann melde Dich heute noch an:</h4>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-default" href="{% url 'accounts:login' %}" role="button">Log in</a>
+    <a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Sign up</a>
+  {% else %}
+<!--<p><a class="btn btn-default" href="{% url 'focus:focus_training_list' %}">Trainings</a></p> -->
+<form id="abmelden" method="post">
+<div class="container-fluid">
+    <h1 >Wettkämpfe & Events</h1>
+<table class="table table-hover table-bordered table-striped table-condensed">
+<tr>
+    <td>Was</td>
+    <td>Von</td>
+    <td>Bis</td>
+    <td>Wo</td>
+    <td>Beschreib</td>
+    <td>Link</td>
+    <td>Anmeldung bis</td>
+    <td>Treffpunkt</td>
+    <td>Treffzeit</td>
+    <td>Dabei?</td>
+</tr>
+{% for object in object_list %}
+<tr>
+<!--    <td><a href="{{object.get_absolute_url}}">{{object.name}}</a></td> -->
+    <td>{{object.name}}</td>
+    <td>{{ object.starttime }}</td>
+    <td>{{ object.endtime }}</td>
+    <td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td>
+    <td>{{ object.short_description }}</td>
+    <td>{{ object.link }}</td>
+    <td>{{ object.sign_in_date }}</td>
+    <td><a href="{{object.meetingpoint.get_absolute_url}}">{{ object.meetingpoint.name }}</a></td>
+    <td>{{ object.meeting_time }}</td>
+        {% csrf_token %}
+    {% if object|competitor:user %}
+        <td><div class="form-group" enctype="multipart/form-data">
+                <button type="submit" value={{ object.pk }} name="abmelden" class="btn btn-primary btn-error">
+                    Abmelden  </button>
+        </div></td>
+    {% else %}
+        <td><div class="form-group" enctype="multipart/form-data">
+                <button type="submit" value={{ object.pk }} name="anmelden" class="btn btn-primary btn-success">
+                    Anmelden  </button>
+        </div></td>
+    {% endif %}
+</tr>
+{% endfor %}
+</table>
+<!--        <a class="btn btn-primary" href="{% url 'focus:focus_training_create' %}">Neues Training</a> -->
+</div>
+</form>
+    {% endif %}
+{% endblock %}

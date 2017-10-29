@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'focus_result_list' %}">Result Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>slug</td>
+    <td>created</td>
+    <td>last_updated</td>
+    <td>duration</td>
+    <td>distance</td>
+    <td>repetitions</td>
+    <td>note</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.slug }}</td>
+    <td>{{ object.created }}</td>
+    <td>{{ object.last_updated }}</td>
+    <td>{{ object.duration }}</td>
+    <td>{{ object.distance }}</td>
+    <td>{{ object.repetitions }}</td>
+    <td>{{ object.note }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'focus_result_create' %}">Create new Result</a>
+{% endblock %}

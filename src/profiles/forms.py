@@ -4,6 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from django.contrib.auth import get_user_model
+from django.forms.widgets import DateInput
 from . import models
 
 User = get_user_model()
@@ -33,9 +34,14 @@ class ProfileForm(forms.ModelForm):
         self.helper.layout = Layout(
             Field('picture'),
             Field('bio'),
+            Field('phone_number'),
+            Field('bdate'),
+            Field('street'),
+            Field('city'),
             Submit('update', 'Update', css_class="btn-success"),
             )
 
+
     class Meta:
         model = models.Profile
-        fields = ['picture', 'bio']
+        fields = ['picture', 'bio', 'bdate','phone_number','street','city']

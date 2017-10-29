@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load customtags %}
+
+{% block title %}{{ block.super }}Trainings{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="training" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+{% block container %}
+
+<div id="sec1" class="text-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1 style="color:#ffffff">{% include "_brandname.html" %}</h1>
+        <h4 style="color:#ffffff">Engagement, Kameradschaft, Bodenständigkeit.</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<p><a class="btn btn-default" href="{% url 'focus:focus_training_list' %}">Trainings</a></p> -->
+<div class="container-fluid">
+    <h1>{{ object.name }}</h1>
+<table class="table table-hover table-bordered table-striped table-condensed">
+<tr><td>Adresse</td><td>{{ object.address }}</td></tr>
+<tr><td>Google Map URL</td><td>{{ object.googlemapurl }}</td></tr>
+<tr><td>Beschreib</td><td>{{ object.description }}</td></tr>
+</table>
+</div>
+
+{% endblock %}
