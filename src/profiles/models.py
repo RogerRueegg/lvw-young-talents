@@ -35,6 +35,13 @@ class BaseProfile(models.Model):
     class Meta:
         abstract = True
 
+    @property
+    def is_coach(self):
+        if self.user_type == 'Coach':
+            return True
+        else:
+            return False
+
 
 @python_2_unicode_compatible
 class Profile(BaseProfile):

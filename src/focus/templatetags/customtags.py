@@ -14,3 +14,9 @@ def competitor(competition, user):
     return competitor.yesorno
 
 register.filter('competitor', competitor)
+
+def strday(dayofweek):
+    days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
+    return days[dayofweek]
+
+register.filter('strday', strday)

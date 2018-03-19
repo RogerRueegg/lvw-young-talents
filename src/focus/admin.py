@@ -11,7 +11,7 @@ class CompetitionAdminForm(forms.ModelForm):
 
 class CompetitionAdmin(admin.ModelAdmin):
     form = CompetitionAdminForm
-    list_display = ['name', 'slug', 'created', 'last_updated', 'startime', 'endtime', 'description', 'link', 'sign_in_date', 'meeting_time', 'file', 'car_seats_required', 'car_seats_available']
+    list_display = ['name', 'slug', 'created', 'last_updated', 'starttime', 'endtime', 'description', 'subscription', 'selfsubscription', 'link', 'sign_in_date', 'meeting_time', 'file', 'car_seats_required', 'car_seats_available']
     #readonly_fields = ['name', 'slug', 'created', 'last_updated', 'startime', 'endtime', 'description', 'link', 'sign_in_date', 'meeting_time', 'file', 'car_seats_required', 'car_seats_available']
 
 admin.site.register(Competition, CompetitionAdmin)

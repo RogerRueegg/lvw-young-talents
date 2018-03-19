@@ -1,18 +1,28 @@
 from django import forms
 from .models import Competition, Training, Competitor, Trainingpresence, Driver, Event, Result, Location
-
+from datetimewidget.widgets import DateTimeWidget
 
 class CompetitionForm(forms.ModelForm):
     class Meta:
         model = Competition
-        fields = ['name', 'startime', 'endtime', 'description', 'link', 'sign_in_date', 'meeting_time', 'file', 'car_seats_required', 'car_seats_available', 'location', 'meetingpoint']
-
+        fields = ['name', 'starttime', 'endtime', 'description', 'link', 'sign_in_date', 'subscription', 'selfsubscription', 'meeting_time', 'file', 'car_seats_required', 'car_seats_available', 'location', 'meetingpoint']
+        widgets = {
+            # Use localization and bootstrap 3
+            'starttime': DateTimeWidget(attrs={'id': "starttime"}, options={'format':'yyyy-mm-dd hh:ii'}),
+            'endtime': DateTimeWidget(attrs={'id': "endtime"}, options={'format':'yyyy-mm-dd hh:ii'}),
+            'sign_in_date': DateTimeWidget(attrs={'id': "starttime"}, options={'format': 'yyyy-mm-dd hh:ii'}),
+            'meeting_time': DateTimeWidget(attrs={'id': "endtime"}, options={'format': 'yyyy-mm-dd hh:ii'}),
+        }
 
 class TrainingForm(forms.ModelForm):
     class Meta:
         model = Training
         fields = ['name', 'starttime', 'endtime', 'intensity', 'short_description', 'detailed_description', 'file', 'location']
-        widgets = {'starttime': forms.DateInput(attrs={'class': 'datepicker'})}
+        widgets = {
+            # Use localization and bootstrap 3
+            'starttime': DateTimeWidget(attrs={'id': "starttime"}, options={'format':'yyyy-mm-dd hh:ii'}),
+            'endtime': DateTimeWidget(attrs={'id': "endtime"}, options={'format':'yyyy-mm-dd hh:ii'}),
+        }
 
 
 class CompetitorForm(forms.ModelForm):

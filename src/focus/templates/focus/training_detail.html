@@ -1,19 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
-<p><a class="btn btn-default" href="{% url 'focus_training_list' %}">Training Listing</a></p>
-<table class="table">
-<tr><td>name</td><td>{{ object.name }}</td></tr>
-<tr><td>slug</td><td>{{ object.slug }}</td></tr>
-<tr><td>created</td><td>{{ object.created }}</td></tr>
-<tr><td>last_updated</td><td>{{ object.last_updated }}</td></tr>
-<tr><td>starttime</td><td>{{ object.starttime }}</td></tr>
-<tr><td>endtime</td><td>{{ object.endtime }}</td></tr>
-<tr><td>intensity</td><td>{{ object.intensity }}</td></tr>
-<tr><td>short_description</td><td>{{ object.short_description }}</td></tr>
-<tr><td>detailed_description</td><td>{{ object.detailed_description }}</td></tr>
-<tr><td>file</td><td>{{ object.file }}</td></tr>
-</table>
-<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Training</a>
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load customtags %}
 
+{% block title %}{{ block.super }}Trainings{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="training" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+{% block container %}
+
+<div id="sec1" class="text-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1 style="color:#ffffff">{% include "_brandname.html" %}</h1>
+        <h4 style="color:#ffffff">Engagement, Kameradschaft, Bodenständigkeit.</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if user.is_authenticated %}
+<p><a class="btn btn-default" href="{% url 'focus:focus_training_list' %}">Trainings</a></p>
+<table class="table table-hover table-bordered table-striped table-condensed">
+<tr><td>Name:</td><td>{{ object.name }}</td></tr>
+<tr><td>Start:</td><td>{{ object.starttime }}</td></tr>
+<tr><td>Ende:</td><td>{{ object.endtime }}</td></tr>
+<tr><td>Intensität</td><td>{{ object.intensity }}</td></tr>
+<tr><td>Kurzbeschreib</td><td>{{ object.short_description }}</td></tr>
+<tr><td>Details</td><td>{{ object.detailed_description }}</td></tr>
+   <tr><td>Treffort</td><td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td></tr>
+<tr><td>File</td><td>{% if object.file %}<a href="{{ media_url }}{{object.file.url}}">Download</a>{% endif %}</td></tr>
+  <tr><td>Angemeldet sind:</td><td></td></tr>
+  {% for athlete in athletes %}
+  <tr><td></td><td>{% if not athlete.excused %}{{ athlete.user.name }}{% endif %}</td></tr>
+  {% endfor %}
+</table>
+{% if user.profile.is_coach %}
+<a class="btn btn-primary" href="{{object.get_update_url}}">Editiern</a>
+<p><a class="btn btn-default" href="{% url 'focus:focus_training_create' %}">Neues Training</a></p>
+{% endif %}
+{% endif %}
 {% endblock %}

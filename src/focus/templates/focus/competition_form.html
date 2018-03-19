@@ -1,11 +1,53 @@
 {% extends "base.html" %}
 {% load static %}
+{% load staticfiles %}
 {% load crispy_forms_tags %}
-{% block content %}
-<p><a class="btn btn-default" href="{% url 'focus_competition_list' %}">Competition Listing</a></p>
-<form method="post">
+{% load customtags %}
+
+{% block title %}{{ block.super }}Competitions{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="competition" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+{% block container %}
+
+<div id="sec1" class="text-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1 style="color:#ffffff">{% include "_brandname.html" %}</h1>
+        <h4 style="color:#ffffff">Engagement, Kameradschaft, Bodenständigkeit.</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<p><a class="btn btn-default" href="{% url 'focus:focus_competition_list' %}">Wettkämpfe</a></p>
+<form method="post" enctype="multipart/form-data">
+  <div class="container-fluid">
 {% csrf_token %}
 {{form|crispy}}
-<button class="btn btn-primary" type="submit">Submit</button>
+<button class="btn btn-primary" type="submit">Speichern</button>
+  </div>
 </form>
+
+<script type="text/javascript">
+  $('.datepicker').datepicker()
+</script>
+
 {% endblock %}
+
+{% block dynamic_js %}
+{% endblock %}
+
+{% block additional_js %}
+<!-- Load data table -->
+<script src="{% static 'js/dataTables.min.js' %}"></script>
+<script src="{% static 'js/buttons.html5.min.js' %}"></script>
+
+<!-- Load datepicker -->
+<script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+{% endblock %}
+
+

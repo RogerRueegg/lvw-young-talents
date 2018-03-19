@@ -5,24 +5,40 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 User = get_user_model()
 import datetime
+from django.utils import timezone
+from django.contrib import messages
 
 class CompetitionListView(ListView):
     model = Competition
 
     def post(self, request, *args, **kwargs):
         if 'abmelden' in request.POST:
-            competitor = Competitor.objects.filter(competition=int(request.POST['abmelden']), user=request.user)[0]
-            competitor.yesorno = False
-            competitor.save()
+            competition = Competition.objects.get(id=int(request.POST['abmelden']))
+            if timezone.now() > competition.sign_in_date:
+                message = "Bitte melde Dich bei Deinem Trainer für den Wettkampf '" + competition.name + "' die Anmeldefrist ist abgelaufen."
+                messages.error(request, message)
+            else:
+                message = "Du bist erfolgreich für den Wettkampf '" + competition.name + "' abgemeldet. Bitte beachte die Details unter 'Wie melde ich mich an?'."
+                messages.success(request, message)
+                competitor = Competitor.objects.filter(competition=int(request.POST['abmelden']), user=request.user)[0]
+                competitor.yesorno = False
+                competitor.save()
         if 'anmelden' in request.POST:
-            competitor = Competitor.objects.filter(competition=int(request.POST['anmelden']), user=request.user)[0]
-            competitor.yesorno = True
-            competitor.save()
+            competition = Competition.objects.get(id=int(request.POST['anmelden']))
+            if timezone.now() > competition.sign_in_date:
+                message = "Bitte melde Dich bei Deinem Trainer für den Wettkampf '" + competition.name + "' die Anmeldefrist ist abgelaufen."
+                messages.error(request, message)
+            else:
+                message = "Du bist erfolgreich für den Wettkampf '" + competition.name + "' angemeldet. Bitte beachte die Details unter 'Wie melde ich mich an?'."
+                messages.success(request, message)
+                competitor = Competitor.objects.filter(competition=int(request.POST['anmelden']), user=request.user)[0]
+                competitor.yesorno = True
+                competitor.save()
         return redirect('focus:focus_competition_list')
 
     def get_queryset(self):
         today = datetime.datetime.today()
-        return Competition.objects.filter(endtime__gte=today)
+        return Competition.objects.filter(endtime__gte=today).order_by('starttime')
 
 
 class CompetitionCreateView(CreateView):
@@ -32,6 +48,12 @@ class CompetitionCreateView(CreateView):
 
 class CompetitionDetailView(DetailView):
     model = Competition
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(CompetitionDetailView, self).get_context_data(**kwargs)
+        context['competitors'] = Competitor.objects.filter(competition=kwargs['object'].pk)
+        return context
 
 
 class CompetitionUpdateView(UpdateView):
@@ -57,9 +79,8 @@ class TrainingListView(ListView):
 
 
     def get_queryset(self):
-        a = 1
         today = datetime.datetime.today()
-        return Training.objects.filter(endtime__gte=today)
+        return Training.objects.filter(endtime__gte=today).order_by('starttime')
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -74,6 +95,13 @@ class TrainingCreateView(CreateView):
 
 class TrainingDetailView(DetailView):
     model = Training
+
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(TrainingDetailView, self).get_context_data(**kwargs)
+        context['athletes'] = Trainingpresence.objects.filter(training=kwargs['object'].pk)
+        return context
 
 
 class TrainingUpdateView(UpdateView):

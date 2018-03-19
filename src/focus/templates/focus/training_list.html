@@ -12,7 +12,7 @@
 
 <!-- Benefits of the Django application -->
 {% block container %}
-
+{% csrf_token %}
 <div id="sec1" class="text-page">
   <div class="container">
     <div class="row">
@@ -31,20 +31,20 @@
 
 <table class="table table-hover table-bordered table-striped table-condensed">
 <tr>
-    <td>Was</td>
+    <td>Name</td>
+    <td>Datum</td>
     <td>Von</td>
     <td>Bis</td>
     <td>Wo</td>
-    <td>Beschreib</td>
 </tr>
 {% for object in object_list %}
 <tr>
 <!--    <td><a href="{{object.get_absolute_url}}">{{object.name}}</a></td> -->
     <td>{{object.name}}</td>
-    <td>{{ object.starttime }}</td>
-    <td>{{ object.endtime }}</td>
+    <td>{{ object.starttime.weekday|strday }}, {{ object.starttime.date }}</td>
+    <td>{{ object.starttime.time }}</td>
+    <td>{{ object.endtime.time }}</td>
     <td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td>
-    <td>{{ object.short_description }}</td>
 </tr>
 {% endfor %}
 </table>
@@ -55,14 +55,20 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a class="btn btn-default" href="{% url 'accounts:login' %}" role="button">Log in</a>
     <a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Sign up</a>
-  {% else %}
 
-<form id="abmelden" method="post">
+{% else %}
+
+{% if user.profile.is_coach %}
+<p><a class="btn btn-default" href="{% url 'focus:focus_training_create' %}">Neues Training</a></p>
+{% endif %}
+
+<form id="trainings" method="post">
 <div class="container-fluid">
     <h1 >Trainings</h1>
 <table class="table table-hover table-bordered table-striped table-condensed">
 <tr>
-    <td>Was</td>
+    <td>Name</td>
+    <td>Datum</td>
     <td>Von</td>
     <td>Bis</td>
     <td>Wo</td>
@@ -73,13 +79,14 @@
 {% for object in object_list %}
 <tr>
 <!--    <td><a href="{{object.get_absolute_url}}">{{object.name}}</a></td> -->
-    <td>{{object.name}}</td>
-    <td>{{ object.starttime }}</td>
-    <td>{{ object.endtime }}</td>
+    <td>{% if user.profile.is_coach %}<a href="{{object.get_absolute_url}}">{% endif %}{{object.name}}</a></td>
+    <td>{{ object.starttime.weekday|strday }}, {{ object.starttime.date }}</td>
+    <td>{{ object.starttime.time }}</td>
+    <td>{{ object.endtime.time }}</td>
     <td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td>
     <td>{{ object.short_description }}</td>
     <td>{{ object.intensity }}</td>
-        {% csrf_token %}
+            {% csrf_token %}
     {% if object|trainingpresence:user %}
         <td><div class="form-group" enctype="multipart/form-data">
                 <button type="submit" value={{ object.pk }} name="anmelden" class="btn btn-primary btn-success">
@@ -94,6 +101,7 @@
 </tr>
 {% endfor %}
 </table>
+
 <!--        <a class="btn btn-primary" href="{% url 'focus:focus_training_create' %}">Neues Training</a> -->
 </div>
 </form>

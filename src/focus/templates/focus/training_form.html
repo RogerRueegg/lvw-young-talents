@@ -24,21 +24,30 @@
   </div>
 </div>
 <p><a class="btn btn-default" href="{% url 'focus:focus_training_list' %}">Trainings</a></p>
-<form method="post">
+<form method="post"  enctype="multipart/form-data">>
+  <div class="container-fluid">
 {% csrf_token %}
 {{form|crispy}}
 <button class="btn btn-primary" type="submit">Speichern</button>
+  </div>
 </form>
- <script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "1900:2012",
-      // You can put more options here.
 
-    });
-  });
-  </script>
+<script type="text/javascript">
+  $('.datepicker').datepicker()
+</script>
+
 {% endblock %}
+
+{% block dynamic_js %}
+{% endblock %}
+
+{% block additional_js %}
+<!-- Load data table -->
+<script src="{% static 'js/dataTables.min.js' %}"></script>
+<script src="{% static 'js/buttons.html5.min.js' %}"></script>
+
+<!-- Load datepicker -->
+<script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+{% endblock %}
+
 

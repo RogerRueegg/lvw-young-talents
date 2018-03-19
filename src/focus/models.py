@@ -17,9 +17,11 @@ class Competition(models.Model):
     slug = extension_fields.AutoSlugField(populate_from='name', blank=True)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
-    startime = models.DateTimeField(blank=True, null=True)
+    starttime = models.DateTimeField(blank=True, null=True)
     endtime = models.DateTimeField(blank=True, null=True)
     description = models.TextField(max_length=2000)
+    subscription = models.TextField(max_length=2000, blank=True, null=True)
+    selfsubscription = models.BooleanField(default=False)
     link = models.URLField(blank=True, null=True)
     sign_in_date = models.DateTimeField(null=True, blank=True)
     meeting_time = models.DateTimeField(null=True, blank=True)
@@ -37,12 +39,23 @@ class Competition(models.Model):
     def __unicode__(self):
         return u'%s' % self.slug
 
+    def __str__(self):
+        return u'%s' % self.name
+
     def get_absolute_url(self):
         return reverse('focus:focus_competition_detail', args=(self.slug,))
 
 
     def get_update_url(self):
         return reverse('focus:focus_competition_update', args=(self.slug,))
+
+    def file_link(self):
+        if self.file:
+            return "<a href='%s'>download</a>" % (self.file.url,)
+        else:
+            return ""
+
+    file_link.allow_tags = True
 
 
 class Training(models.Model):
@@ -68,6 +81,9 @@ class Training(models.Model):
     def __unicode__(self):
         return u'%s' % self.slug
 
+    def __str__(self):
+        return u'%s' % self.name
+
     def get_absolute_url(self):
         return reverse('focus:focus_training_detail', args=(self.slug,))
 
@@ -83,6 +99,12 @@ class Training(models.Model):
             else:
                 tp.excused=True
             tp.save()
+
+    def file_link(self):
+        if self.file:
+            return "<a href='%s'>download</a>" % (self.file.url,)
+        else:
+            return ""
 
 class Competitor(models.Model):
 
@@ -102,6 +124,9 @@ class Competitor(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.slug
+
+    def __str__(self):
+        return u'%s' % self.user.name
 
     def get_absolute_url(self):
         return reverse('focus_competitor_detail', args=(self.slug,))
@@ -130,6 +155,9 @@ class Trainingpresence(models.Model):
         ordering = ('-created',)
 
     def __unicode__(self):
+        return u'%s' % self.slug
+
+    def __str__(self):
         return u'%s' % self.slug
 
     def get_absolute_url(self):
@@ -162,6 +190,9 @@ class Driver(models.Model):
     def __unicode__(self):
         return u'%s' % self.slug
 
+    def __str__(self):
+        return u'%s' % self.slug
+
     def get_absolute_url(self):
         return reverse('focus_driver_detail', args=(self.slug,))
 
@@ -190,6 +221,9 @@ class Event(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.slug
+
+    def __str__(self):
+        return u'%s' % self.name
 
     def get_absolute_url(self):
         return reverse('focus_event_detail', args=(self.slug,))
@@ -221,6 +255,9 @@ class Result(models.Model):
     def __unicode__(self):
         return u'%s' % self.slug
 
+    def __str__(self):
+        return u'%s' % self.slug
+
     def get_absolute_url(self):
         return reverse('focus_result_detail', args=(self.slug,))
 
@@ -246,6 +283,9 @@ class Location(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.slug
+
+    def __str__(self):
+        return u'%s' % self.name
 
     def get_absolute_url(self):
         return reverse('focus:focus_location_detail', args=(self.slug,))
