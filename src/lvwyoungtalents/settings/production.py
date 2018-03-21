@@ -8,7 +8,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 # Must mention ALLOWED_HOSTS in production!
-# ALLOWED_HOSTS = ["lvwyoungtalents.com"]
+ALLOWED_HOSTS = ["www.lvw-young-talents.ch"]
 
 # Cache the templates in memory for speed-up
 loaders = [
