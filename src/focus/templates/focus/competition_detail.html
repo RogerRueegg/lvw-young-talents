@@ -32,7 +32,7 @@
 <tr><td>Ende:</td><td>{{ object.endtime }}</td></tr>
   <tr><td>Wo:</td><td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td></tr>
 <tr><td>Beschreib</td><td>{{ object.description }}</td></tr>
-<tr><td>Link</td><td>{{ object.link }}</td></tr>
+<tr><td>Link</td><td>{% if object.link %} <a href="{{ object.link }}">Kalendereintrag</a>{% endif %} </td></tr>
 <tr><td>Anmelden bis</td><td>{{ object.sign_in_date }}</td></tr>
   <tr><td>Muss ich mich selber anmelden?</td><td>{% if object.selfsubscription %}Ja {% else %} Nein{% endif %}</td></tr>
   <tr><td>Wie melde ich mich an?</td><td>{{ object.subscription }}</td></tr>
