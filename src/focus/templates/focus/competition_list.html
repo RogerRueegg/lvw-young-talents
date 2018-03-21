@@ -75,7 +75,7 @@
     <td>{{ object.endtime }}</td>
     <td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td>
     <td>{{ object.sign_in_date }}</td>
-    <td>{{ object.subscription }}<</td>
+    <td>{{ object.subscription }}</td>
         {% csrf_token %}
     {% if object|competitor:user %}
         <td><div class="form-group" enctype="multipart/form-data">
@@ -85,7 +85,7 @@
     {% else %}
         <td><div class="form-group" enctype="multipart/form-data">
                 <button type="submit" value={{ object.pk }} name="anmelden" class="btn btn-primary btn-success">
-                    Ich habe/möchte mich angemeldet:)  </button>
+                    {% if object.selfsubscription %}   Ich habe mich angemeldet wie links beschrieben! {% else %} Ich möchte mich anmelden {% endif %}  </button>
         </div></td>
     {% endif %}
 </tr>
