@@ -21,6 +21,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     {{ form.media }}
 
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/moment.min.js' %}"></script>
+
   <script>
   $(document).ready(function() {
     $("#datepicker").datepicker();
@@ -141,10 +146,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap-datetimepicker.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/moment.min.js' %}"></script>
 
     {% block scripts %}
     {% endblock scripts %}
