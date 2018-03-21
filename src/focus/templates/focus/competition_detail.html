@@ -30,13 +30,14 @@
 <table class="table table-hover table-bordered table-striped table-condensed">
 <td>Start:</td><td>{{ object.starttime }}</td></tr>
 <tr><td>Ende:</td><td>{{ object.endtime }}</td></tr>
+  <tr><td>Wo:</td><td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td></tr>
 <tr><td>Beschreib</td><td>{{ object.description }}</td></tr>
 <tr><td>Link</td><td>{{ object.link }}</td></tr>
 <tr><td>Anmelden bis</td><td>{{ object.sign_in_date }}</td></tr>
   <tr><td>Muss ich mich selber anmelden?</td><td>{% if object.selfsubscription %}Ja {% else %} Nein{% endif %}</td></tr>
   <tr><td>Wie melde ich mich an?</td><td>{{ object.subscription }}</td></tr>
 <tr><td>Treffzeit</td><td>{{ object.meeting_time }}</td></tr>
-  <tr><td>Treffort</td><td><a href="{{object.location.get_absolute_url}}">{{ object.location.name }}</a></td></tr>
+  <tr><td>Treffort</td><td><a href="{{object.meetingpoint.get_absolute_url}}">{{ object.meetingpoint.name }}</a></td></tr>
 <tr><td>File</td><td>{% if object.file %}<a href="{{ media_url }}{{object.file.url}}">Download</a>{% endif %}</td></tr>
   <tr><td>Angemeldet sind:</td><td></td></tr>
   {% for competitor in competitors %}
